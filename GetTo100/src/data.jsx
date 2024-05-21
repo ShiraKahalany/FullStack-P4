@@ -6,17 +6,20 @@ const StoreDataInLocalStorage = () => {
     const playersData = {
       "players": [
         {
-          "name": "Noam",
+          "username": "Noam",
+          "password": "1234",
           "scores": [10, 9, 13, 20, 15],
           "average": 13.4
         },
         {
-          "name": "Yael",
+          "username": "Yael",
+          "password": "2345",
           "scores": [7, 8, 9, 10, 11],
           "average": 9
         },
         {
-          "name": "Yossi",
+          "username": "Yossi",
+          "password": "5678",
           "scores": [5, 6, 7, 8, 9],
           "average": 7
         }

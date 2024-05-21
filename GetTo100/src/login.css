@@ -1,0 +1,37 @@
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.input-group input {
+    margin: 5px 0;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.input-group button {
+    padding: 10px;
+    font-size: 16px;
+}
+
+.players-list {
+    margin: 20px 0;
+    width: 100%;
+    max-width: 300px;
+}
+
+.player-box {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin: 5px 0;
+}

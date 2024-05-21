@@ -1,9 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-function Board() {
-  const [number, setNumber] = useState(Math.floor(Math.random() * 100));
-  const [steps, setSteps] = useState(0);
-
+function Board({ number, steps, isActive, onMove, onGameEnd }) {
   const handleOperation = (operation) => {
     let newNumber;
     switch (operation) {
@@ -17,25 +14,32 @@ function Board() {
         newNumber = number * 2;
         break;
       case '/':
-        newNumber = Math.floor(number / 2); 
+        newNumber = Math.floor(number / 2);
         break;
       default:
         newNumber = number;
     }
-    setNumber(newNumber);
-    setSteps(steps + 1);
+
+    const newSteps = steps + 1;
+    onMove(newNumber, newSteps); // Pass the turn after the operation
+
+    if (newNumber >= 100) {
+      onGameEnd(newSteps); // Notify parent component when reaching 100
+    }
   };
 
   return (
     <div>
       <p>Number: {number}</p>
-      <div>
-        <button onClick={() => handleOperation('+')}>+1</button>
-        <button onClick={() => handleOperation('-')}>-1</button>
-        <button onClick={() => handleOperation('*')}>*2</button>
-        <button onClick={() => handleOperation('/')}>/2</button>
-      </div>
       <p>Steps: {steps}</p>
+      {isActive && (
+        <div>
+          <button onClick={() => handleOperation('+')}>+1</button>
+          <button onClick={() => handleOperation('-')}>-1</button>
+          <button onClick={() => handleOperation('*')}>*2</button>
+          <button onClick={() => handleOperation('/')}>/2</button>
+        </div>
+      )}
     </div>
   );
 }

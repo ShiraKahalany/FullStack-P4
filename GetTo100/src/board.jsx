@@ -23,7 +23,7 @@ function Board({ number, steps, isActive, onMove, onGameEnd }) {
     const newSteps = steps + 1;
     onMove(newNumber, newSteps); // Pass the turn after the operation
 
-    if (newNumber >= 100) {
+    if (newNumber === 100) {
       onGameEnd(newSteps); // Notify parent component when reaching 100
     }
   };

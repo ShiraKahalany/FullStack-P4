@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Board({ number, steps, isActive, onMove, onGameEnd }) {
+function Board({ number, steps, isActive, onMove, onGameEnd, score }) {
   const handleOperation = (operation) => {
     let newNumber;
     switch (operation) {
@@ -21,10 +21,10 @@ function Board({ number, steps, isActive, onMove, onGameEnd }) {
     }
 
     const newSteps = steps + 1;
-    onMove(newNumber, newSteps); // Pass the turn after the operation
+    onMove(newNumber, newSteps);
 
-    if (newNumber === 100) {
-      onGameEnd(newSteps); // Notify parent component when reaching 100
+    if (newNumber >= 100) {
+      onGameEnd(newSteps);
     }
   };
 
@@ -32,6 +32,7 @@ function Board({ number, steps, isActive, onMove, onGameEnd }) {
     <div>
       <p>Number: {number}</p>
       <p>Steps: {steps}</p>
+      <p>Score: {score}</p>
       {isActive && (
         <div>
           <button onClick={() => handleOperation('+')}>+1</button>

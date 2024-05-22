@@ -2,9 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Board from './board';
 
-/**
- * Game component represents the main game screen.
- */
 function Game() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -13,23 +10,20 @@ function Game() {
   const [boards, setBoards] = useState([]);
 
   useEffect(() => {
-    /**
-     * Initialize the game boards when active players change.
-     */
-    const initialBoards = activePlayers.map(player => ({
-      player,
-      number: Math.floor(Math.random() * 100),
-      steps: 0,
-    }));
+    const playersData = JSON.parse(localStorage.getItem('playersData')) || { players: [] };
+    const initialBoards = activePlayers.map(player => {
+      const playerData = playersData.players.find(p => p.username === player.username && p.password === player.password);
+      const average = playerData ? playerData.average : 0;
+      return {
+        player,
+        number: Math.floor(Math.random() * 100),
+        steps: 0,
+        score: average
+      };
+    });
     setBoards(initialBoards);
   }, [activePlayers]);
 
-  /**
-   * Handle the move of a player on the board.
-   * @param {number} index - The index of the board in the boards array.
-   * @param {number} newNumber - The new number to update on the board.
-   * @param {number} newSteps - The new number of steps taken on the board.
-   */
   const handleMove = (index, newNumber, newSteps) => {
     const updatedBoards = boards.map((board, i) =>
       i === index ? { ...board, number: newNumber, steps: newSteps } : board
@@ -39,16 +33,10 @@ function Game() {
     setCurrentPlayerIndex((prevIndex) => (prevIndex + 1) % updatedBoards.length);
   };
 
-  /**
-   * Handle the end of the game for a player.
-   * @param {number} index - The index of the board in the boards array.
-   * @param {number} steps - The number of steps taken to reach 100.
-   */
   const handleGameEnd = (index, steps) => {
     const player = boards[index].player;
 
-    // Update player's scores and average
-    const playersData = JSON.parse(localStorage.getItem('playersData'));
+    const playersData = JSON.parse(localStorage.getItem('playersData')) || { players: [] };
     const updatedPlayers = playersData.players.map(p => {
       if (p.username === player.username && p.password === player.password) {
         const updatedScores = [...p.scores, steps];
@@ -63,34 +51,36 @@ function Game() {
       return p;
     });
 
-    // Update localStorage with the new scores and averages
     localStorage.setItem('playersData', JSON.stringify({ players: updatedPlayers }));
+
+    const updatedBoards = boards.map((board, i) => {
+      if (i === index) {
+        const playerData = updatedPlayers.find(p => p.username === player.username && p.password === player.password);
+        const average = playerData ? playerData.average : 0;
+        return { ...board, number: Math.floor(Math.random() * 100), steps: 0, score: average };
+      }
+      return board;
+    });
+
+    setBoards(updatedBoards);
 
     const action = window.confirm(`${player.username} reached 100 in ${steps} steps! Start a new game? Click OK to start a new game or Cancel to exit.`);
     if (action) {
-      // Reset the player's board for a new game
-      const updatedBoards = boards.map((board, i) =>
-        i === index ? { ...board, number: Math.floor(Math.random() * 100), steps: 0 } : board
-      );
       setBoards(updatedBoards);
     } else {
-      // Remove the player's board and update the game state
-      const updatedBoards = boards.filter((_, i) => i !== index);
-      setBoards(updatedBoards);
+      const remainingBoards = updatedBoards.filter((_, i) => i !== index);
+      setBoards(remainingBoards);
 
-      // Adjust currentPlayerIndex if necessary
       if (index < currentPlayerIndex) {
-        setCurrentPlayerIndex((prevIndex) => (prevIndex - 1) % updatedBoards.length);
-      } else if (currentPlayerIndex >= updatedBoards.length) {
+        setCurrentPlayerIndex((prevIndex) => (prevIndex - 1) % remainingBoards.length);
+      } else if (currentPlayerIndex >= remainingBoards.length) {
         setCurrentPlayerIndex(0);
       }
 
-      // If no players are left, navigate to home
-      if (updatedBoards.length === 0) {
+      if (remainingBoards.length === 0) {
         navigate('/');
       } else {
-        // Move the turn to the next player if the current player exits
-        setCurrentPlayerIndex((prevIndex) => (prevIndex % updatedBoards.length));
+        setCurrentPlayerIndex((prevIndex) => (prevIndex % remainingBoards.length));
       }
     }
   };
@@ -114,6 +104,7 @@ function Game() {
               isActive={index === currentPlayerIndex}
               onMove={(newNumber, newSteps) => handleMove(index, newNumber, newSteps)}
               onGameEnd={(steps) => handleGameEnd(index, steps)}
+              score={board.score}
             />
           </div>
         ))}

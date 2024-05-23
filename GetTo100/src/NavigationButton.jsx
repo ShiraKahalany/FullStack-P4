@@ -5,7 +5,7 @@ function NavigationButton() {
   const navigate = useNavigate();
 
   return (
-    <button onClick={() => navigate('/myScore')}>My Score</button>
+    <button onClick={() => navigate('./myScore')}>My Score</button>
   );
 }
 

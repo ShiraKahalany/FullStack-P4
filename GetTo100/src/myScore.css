@@ -1,0 +1,71 @@
+*{
+    background-color: rgb(215, 215, 69);
+    position: relative;
+    overflow: hidden;
+}
+.smoky-border{
+    border-style: groove;
+    padding: 40px;
+}
+
+  
+
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+
+h1{
+    color:blue;
+    font-size: 10px;
+    transition: width 2s;
+    font-family: 'Bangers', cursive;
+
+
+
+}
+input{
+    border-radius:15px;
+    cursor: pointer;
+    width: 200px;
+    height: 40px;
+    font-size: 25px;
+    background-color: aliceblue;
+    border: 2px solid #ccc;
+    transition: border-color 0.3s ease;
+
+}
+  
+ input:focus {
+    outline: none;
+    border-color: #007bff; 
+    box-shadow: 0 0 5px #007bff; 
+  }
+  
+
+input:hover {
+    color: #FF00FF;
+
+}
+
+
+.btn-score{
+    font-family: 'Bangers', cursive;
+    font-size: 22px;
+    font-weight: bold; 
+    border: 2px solid #ccc;
+    background-color: aliceblue;
+    color:blue;
+
+}
+
+.btn-score:focus{
+    outline: none;
+    border-color: #007bff; 
+    box-shadow: 0 0 5px #007bff; 
+  
+}
+.the-score{
+    font-size: 40px;
+    font-family: 'Bangers', cursive;
+    color:blue;
+    font-weight: bold; 
+
+}

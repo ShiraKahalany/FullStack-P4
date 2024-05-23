@@ -27,6 +27,9 @@ function Home() {
           ))}
         </ul>
         <button className="start-button" onClick={() => navigate('/logIn')}>Start</button>
+        <br></br>
+        <button className="profile-button" onClick={() => navigate('/myScore')}>My Score</button>
+
       </div>
     );
 

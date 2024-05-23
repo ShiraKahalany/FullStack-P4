@@ -39,8 +39,8 @@ function MyScore() {
             <br></br>
             <br></br>
 
-          <button classNmae="btn-score"onClick={calcMyScore}>My Score:</button>
-          <p class="the-score">{myScore}</p>
+          <button className="btn-score"onClick={calcMyScore}>My Score:</button>
+          <p className="the-score">{myScore}</p>
           {/* <ul>{myScore.map((score) => <li>{score}</li>)} </ul> */}
           {/* <ul className="the-score">
   {myScore.map((score, index) => (

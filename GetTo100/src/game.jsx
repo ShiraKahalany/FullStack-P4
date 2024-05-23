@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Board from './board';
+import AlertDialog from './dialog';
 
 function Game() {
   const location = useLocation();
@@ -8,6 +9,8 @@ function Game() {
   const activePlayers = location.state?.activePlayers || [];
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
   const [boards, setBoards] = useState([]);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [dialogData, setDialogData] = useState({});
 
   useEffect(() => {
     const playersData = JSON.parse(localStorage.getItem('playersData')) || { players: [] };
@@ -63,24 +66,31 @@ function Game() {
     });
 
     setBoards(updatedBoards);
+    setDialogData({ username: player.username, steps });
+    setOpenDialog(true);
+  };
 
-    const action = window.confirm(`${player.username} reached 100 in ${steps} steps! Start a new game? Click OK to start a new game or Cancel to exit.`);
-    if (action) {
+  const handleDialogClose = (startNewGame) => {
+    setOpenDialog(false);
+    if (startNewGame) {
+      const updatedBoards = boards.map((board, i) => ({
+        ...board,
+        number: Math.floor(Math.random() * 100),
+        steps: 0,
+      }));
       setBoards(updatedBoards);
     } else {
-      const remainingBoards = updatedBoards.filter((_, i) => i !== index);
+      const remainingBoards = boards.filter((_, i) => i !== currentPlayerIndex);
       setBoards(remainingBoards);
 
-      if (index < currentPlayerIndex) {
-        setCurrentPlayerIndex((prevIndex) => (prevIndex - 1) % remainingBoards.length);
-      } else if (currentPlayerIndex >= remainingBoards.length) {
+      if (currentPlayerIndex >= remainingBoards.length) {
         setCurrentPlayerIndex(0);
+      } else if (currentPlayerIndex > 0) {
+        setCurrentPlayerIndex(currentPlayerIndex - 1);
       }
 
       if (remainingBoards.length === 0) {
         navigate('/');
-      } else {
-        setCurrentPlayerIndex((prevIndex) => (prevIndex % remainingBoards.length));
       }
     }
   };
@@ -108,6 +118,7 @@ function Game() {
             />
           </div>
         ))}
+        <AlertDialog open={openDialog} onClose={handleDialogClose} dialogData={dialogData} />
       </div>
     </>
   );

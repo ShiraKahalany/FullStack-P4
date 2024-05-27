@@ -1,37 +1,123 @@
-.login-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
+/***  SignIn and SignUp style  ***/
+
+body { 
+	display: flex; 
+	align-items: center; 
+	justify-content: center; 
+	font-family: sans-serif; 
+	line-height: 1.5; 
+	min-height: 100vh; 
+	background-image: linear-gradient(to bottom, rgb(255, 255, 255), rgb(250, 250, 250), rgb(95, 145, 183));
+	flex-direction: column; 
+	margin: 0; 
+} 
+
+.main { 
+	background-color: #fff; 
+	border-radius: 15px; 
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); 
+	padding: 10px 20px; 
+	transition: transform 0.2s; 
+	width: 500px; 
+	text-align: center; 
+} 
+
+h1,h2 { 
+	color: #66879d; 
+	font-family: 'Bangers', cursive;
+
+} 
+
+label { 
+	display: block; 
+	width: 100%; 
+	margin-top: 10px; 
+	margin-bottom: 5px; 
+	text-align: center; 
+	color: #555; 
+	font-weight: bold; 
+	font-family: 'Bangers', cursive;
+
+} 
+
+
+input { 
+	display: inline; 
+	width: 100%; 
+	margin-bottom: 15px; 
+	padding: 10px; 
+	box-sizing: border-box; 
+	border: 1px solid #ddd; 
+	border-radius: 5px; 
+	font-family: 'Bangers', cursive;
+
+} 
+
+
+input::placeholder { 
+	font-size: 17px; /* Adjust the font size here */
+	color: #aaa; /* You can also change the color if you like */
+	font-family: 'Bangers', cursive;
+} 
+
+a {
+	text-decoration: none
 }
 
-.input-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
+.wrap { 
+	display: flex; 
+	justify-content: center; 
+	align-items: center; 
 }
 
-.input-group input {
-    margin: 5px 0;
-    padding: 10px;
-    font-size: 16px;
+.detailsProfile {
+    display: flex; 
 }
 
-.input-group button {
-    padding: 10px;
-    font-size: 16px;
+.detailsProfile label {
+    margin-right: 10px; 
 }
 
-.players-list {
-    margin: 20px 0;
-    width: 100%;
-    max-width: 300px;
+
+.startButton{
+	font-family: 'Bangers', cursive;
+	font-size: 20px;
+	padding: 10px 20px;
+	border-radius: 5px;
+	background-color: #102e41;
+	color: white;
+	border: none;
+	cursor: pointer;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	transition: background-color 0.3s;
 }
 
-.player-box {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    border: 1px solid #ccc;
-    margin: 5px 0;
+.addButton{
+    font-family: 'Bangers', cursive;
+   margin-bottom: 30px;
+    font-size: 20px;
+	padding: 10px 20px;
+	border-radius: 5px;
+	background-color: #66879d;
+	color: white;
+	border: none;
+	cursor: pointer;
+	margin-top: 20px;
+	transition: background-color 0.3s;
 }
+
+.players-list{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+
+}
+
+.players-list div{
+	margin: 10px;
+	font-family: 'Bangers', cursive;
+	font-weight: bold; 
+	font-size: 27px;
+	}

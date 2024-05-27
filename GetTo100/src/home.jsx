@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import './home.css'
 import { useNavigate } from 'react-router-dom';
 
+
 function Home() {
     const [topPlayers, setTopPlayers] = useState([]);
     const navigate = useNavigate()
     useEffect(() => {
         const playersData = JSON.parse(localStorage.getItem('playersData'));
-        console.log(playersData);
         const sortedPlayers = playersData.players.sort((a, b) => b.average - a.average);
         setTopPlayers(sortedPlayers.slice(0, 3));
 
@@ -16,8 +16,11 @@ function Home() {
 
   
     return (
-        <div className="home-container">
-        <h2 className="title">Top 3 Players</h2>
+        <div class="homebody">
+        <div className="header-container">
+        <button className="profile-button" onClick={() => navigate('/myScore')}>My Score</button>
+        <h1 className="title">Top 3 Players</h1>
+        </div>
         <ul className="player-list">
           {topPlayers.map((player, index) => (
             <li key={index} className="player-item">
@@ -28,7 +31,6 @@ function Home() {
         </ul>
         <button className="start-button" onClick={() => navigate('/logIn')}>Start</button>
         <br></br>
-        <button className="profile-button" onClick={() => navigate('/myScore')}>My Score</button>
 
       </div>
     );

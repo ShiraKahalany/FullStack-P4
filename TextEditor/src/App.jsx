@@ -1,78 +1,43 @@
 import React, { useState } from 'react';
 import './App.css';
+import { englishCapitalLetters, englishSmallLetters, hebrewLetters, specialCharacters, emojiKeyboard } from './KeyboardLayout';
+import KeyboardLayout from './KeyboardLayout';
+import ColorPalette from './colorPalette';
+import TextEditor from './TextEditor';
+import FontFamilySelector from './FontFamilySelector';
 
 function App() {
   const [text, setText] = useState('');
   const [isEnglishKeyboard, setIsEnglishKeyboard] = useState(true);
   const [isUppercase, setIsUppercase] = useState(true);
-  const [textColor, setTextColor] = useState('black');
-  const [selectedColor, setSelectedColor] = useState(null); // State to manage selected color
+  const [selectedColor, setSelectedColor] = useState(null);
+  const [textSize, setTextSize] = useState(16);
+  const [charSize, setCharSize] = useState(null);
+  const [fontFamily, setFontFamily] = useState(null);
 
-  const englishCapitalLetters = [
-    ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
-    ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
-    ['Z', 'X', 'C', 'V', 'B', 'N', 'M'],
-    ['Space', 'Delete']
-  ];
-
-  const englishSmallLetters = [
-    ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
-    ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
-    ['z', 'x', 'c', 'v', 'b', 'n', 'm'],
-    ['Space', 'Delete']
-  ];
-
-  const hebrewLetters = [
-    ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט', 'י'],
-    ['כ', 'ל', 'מ', 'נ', 'ס', 'ע', 'פ', 'צ', 'ק', 'ר'],
-    ['ש', 'ת', 'ם', 'ן', 'ף', 'ץ'],
-    ['רווח', 'מחק']
-  ];
-
-  const specialCharacters = [
-    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
-    ['?', '#', '$', '%', '&', '@', '!', '*', '+', '-'],
-    ['/', '\\', '=', '^', '_', '|', '~'],
-    ['(', ')', '[', ']', '{', '}', '<', '>'],
-    ['.', ',', ':', ';', '"', "'", '`']
-  ];
-
-  const emojiKeyboard = [
-    ['😀', '😃', '😄', '😁', '😆', '😅', '😂', '🤣', '😊', '😇'],
-    ['😉', '😊', '🙂', '😌', '😍', '😘', '😗', '😙', '😚', '😋'],
-    ['😛', '😜', '😝', '🤑', '🤗', '🤓', '😎', '🤡', '🤠', '😏'],
-    ['😶', '😐', '😑', '😒', '🙄', '😬', '🤥', '😔', '😪', '😴'],
-    ['😷', '🤒', '🤕', '🤢', '🤮', '🤧', '🥵', '🥶', '🥴', '😵'],
-    ['🤯', '🥳', '😎', '🤓', '🧐', '😕', '😟', '🙁', '☹️', '🥱'],
-    ['😮', '😯', '😲', '😳', '🥺', '😦', '😧', '😨', '😰', '😥'],
-    ['😢', '😭', '😱', '😖', '😣', '😞', '😓', '😩', '😫', '😤'],
-    ['😡', '😠', '🤬', '😈', '👿', '💀', '☠️', '💩', '👾', '🤖'],
-    ['👹', '👺', '👻', '👽'],
-  ];
+  const deletekey = () => {
+    let updatedText = text;
+    if (updatedText.charAt(updatedText.length - 1) === '>') {
+      const startIndex = updatedText.lastIndexOf('<');
+      updatedText = updatedText.substring(0, startIndex);
+    } else {
+      updatedText = updatedText.slice(0, -1);
+    }
+    setText(updatedText);
+  };
 
   const handleKeyPress = (char) => {
-    if (char === 'Delete' || char === 'מחק') {
-      let updatedText = text;
-  
-      // Check if the last character is an HTML tag
-      if (updatedText.charAt(updatedText.length - 1) === '>') {
-        const startIndex = updatedText.lastIndexOf('<');
-        updatedText = updatedText.substring(0, startIndex); // Remove the entire tag
-      } else {
-        updatedText = updatedText.slice(0, -1); // Remove the last character
-      }
-      setText(updatedText);
-      return;
-    }
-    if (char === 'Space' || char === 'רווח') {
-      setText((prevText) => prevText + ' ');
-      return;
-    }
-       else if (selectedColor) {
-      setText((prevText) => prevText + `<span style="color: ${selectedColor}">${char}</span>`); // Insert the character with color style
-      return;
-    }   
-    setText((prevText) => prevText + char);
+    let newChar = char;
+    let style = '';
+
+    if (selectedColor) style += `color: ${selectedColor};`;
+    if (charSize) style += `font-size: ${charSize}px;`;
+    if (fontFamily) style += `font-family: ${fontFamily};`;
+
+    if (style) newChar = `<span style="${style}">${char}</span>`;
+    else newChar = `<span>${char}</span>`;
+
+    setText((prevText) => prevText + newChar);
   };
 
   const handleToggleKeyboard = () => {
@@ -87,70 +52,87 @@ function App() {
     setSelectedColor(color);
   };
 
+  const handleFontFamilyChange = (font) => {
+    setFontFamily(font);
+  };
+
+  const increaseTextSize = () => {
+    setTextSize((prevSize) => prevSize + 2);
+  };
+
+  const decreaseTextSize = () => {
+    setTextSize((prevSize) => Math.max(prevSize - 2, 10));
+  };
+
+  const increaseCharSize = () => {
+    setCharSize((prevSize) => (prevSize ? prevSize + 2 : textSize + 2));
+  };
+
+  const decreaseCharSize = () => {
+    setCharSize((prevSize) => Math.max(prevSize ? prevSize - 2 : textSize - 2, 10));
+  };
+
+  const applyFontFamilyToAll = (font) => {
+    const updatedText = text.replace(/<span(.*?)>(.*?)<\/span>/g, (match, p1, p2) => {
+      let newStyles = `font-family: ${font};`;
+      let updatedSpan = p1;
+
+      if (p1.includes('style="')) {
+        updatedSpan = p1.replace(/style="(.*?)"/, (styleMatch, styleContent) => {
+          // Remove any existing font-family definition
+          const cleanedStyles = styleContent.replace(/font-family:[^;]+;/, '').trim();
+          return `style="${cleanedStyles} ${newStyles}"`.trim();
+        });
+      } else {
+        updatedSpan = `${p1} style="${newStyles}"`;
+      }
+
+      return `<span${updatedSpan}>${p2}</span>`;
+    });
+    setText(updatedText);
+  };
+
+
   return (
-    <div className="container">
-      <div
-        className="input-box"
-        contentEditable="true"
-        style={{ color: textColor }}
-        dangerouslySetInnerHTML={{ __html: text }}
-      ></div>
-      <div className="keyboards">
-        {isEnglishKeyboard ? (
-          <>
-            <KeyboardLayout letters={isUppercase ? englishCapitalLetters : englishSmallLetters} onKeyPress={handleKeyPress} />
-          </>
-        ) : (
-          <>
-            <KeyboardLayout letters={hebrewLetters} onKeyPress={handleKeyPress} />
-          </>
-        )}
-        <div className="buttons">
-          <button onClick={handleToggleKeyboard}>
-            {isEnglishKeyboard ? 'Hebrew' : 'English'}
-          </button>
-          {isEnglishKeyboard && <button onClick={handleToggleCase}>
-            {isUppercase ? 'Lowercase' : 'Uppercase'}
-          </button>}
+    <>
+      <TextEditor text={text} onChange={setText} textSize={textSize} />
+      <div className="container">
+        <div className="keyboards">
           <ColorPalette onColorChange={handleColorChange} />
+          <FontFamilySelector onFontFamilyChange={handleFontFamilyChange} />
+          {isEnglishKeyboard ? (
+            <KeyboardLayout letters={isUppercase ? englishCapitalLetters : englishSmallLetters} onKeyPress={handleKeyPress} />
+          ) : (
+            <KeyboardLayout letters={hebrewLetters} onKeyPress={handleKeyPress} />
+          )}
+          <div className="buttons">
+            <button onClick={deletekey}>Delete</button>
+            <button onClick={() => { setText((prevText) => prevText + ' ') }}>Space</button>
+            <button onClick={handleToggleKeyboard}>
+              {isEnglishKeyboard ? 'Hebrew' : 'English'}
+            </button>
+            {isEnglishKeyboard && (
+              <button onClick={handleToggleCase}>
+                {isUppercase ? 'Lowercase' : 'Uppercase'}
+              </button>
+            )}
+            <button onClick={increaseCharSize}>A</button>
+            <button onClick={decreaseCharSize}>a</button>
+          </div>
+          <div className="generalbuttons">
+            <button onClick={() => { setText('') }}>Clear All</button>
+            <button onClick={() => { setText(text.toUpperCase()) }}>Upper All</button>
+            <button onClick={() => { setText(text.toLowerCase()) }}>Lower All</button>
+            <button onClick={increaseTextSize}>AA</button>
+            <button onClick={decreaseTextSize}>aa</button>
+            <FontFamilySelector onFontFamilyChange={applyFontFamilyToAll} />
+          </div>
+          <KeyboardLayout letters={specialCharacters} onKeyPress={handleKeyPress} />
+          <KeyboardLayout letters={emojiKeyboard} onKeyPress={handleKeyPress} />
         </div>
-        <KeyboardLayout letters={specialCharacters} onKeyPress={handleKeyPress} />
-        <KeyboardLayout letters={emojiKeyboard} onKeyPress={handleKeyPress} />
       </div>
-    </div>
+    </>
   );
 }
-
-const KeyboardLayout = ({ letters, onKeyPress }) => {
-  return (
-    <div className="keyboard">
-      {letters.map((row, rowIndex) => (
-        <div key={rowIndex} className="row">
-          {row.map((char, index) => (
-            <button key={index} onClick={() => onKeyPress(char)}>
-              {char}
-            </button>
-          ))}
-        </div>
-      ))}
-    </div>
-  );
-};
-
-const ColorPalette = ({ onColorChange }) => {
-  const colors = ['black','red', 'green', 'blue', 'orange', 'purple']; // Define colors
-  return (
-    <div className="color-palette">
-      {colors.map((color, index) => (
-        <button
-          key={index}
-          style={{ backgroundColor: color }}
-          onClick={() => onColorChange(color)}
-        ></button>
-      ))}
-    </div>
-  );
-};
-
 
 export default App;

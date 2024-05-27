@@ -1,43 +1,70 @@
-.app {
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #2e2e2e; 
+}
+
+.container {
+  margin-top: 70px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 50px;
+  width: 100%;
+  max-width: 1200px;
+  height: 100%;
+  box-sizing: border-box;
 }
 
-.text-editor {
-  width: 80%;
-  height: 300px;
-  margin-bottom: 20px;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
 
-.toolbar {
-  margin-bottom: 20px;
-}
 
-.toolbar button {
-  margin-right: 10px;
-  padding: 5px 10px;
-  font-size: 14px;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-}
 
-.keyboard {
+.buttons {
+  display: flex;
+  justify-content: center;
   margin-top: 20px;
 }
 
-.keyboard button {
-  margin-right: 10px;
-  padding: 5px 10px;
-  font-size: 14px;
+button {
+  background-color: #4e4e4e;
+  color: white;
   border: none;
-  border-radius: 3px;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #6e6e6e;
+}
+
+.generalbuttons {
+  display: flex;
+  justify-content: center;
+}
+
+.generalbuttons button {
+  color: rgb(116, 194, 167);
+
+}
+
+/* .generalbuttons label{
+  color:rgb(179, 246, 223);
+  font-weight: bold;
+} */
+
+
+select {
+  margin: 0 5px;
+  padding: 10px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
 }

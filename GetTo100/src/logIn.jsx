@@ -43,34 +43,44 @@ function LogIn() {
         } else {
             alert('Please enter both username and password.');
         }
+
+        
     };
 
     return (
         <div className="login-container">
-            <h2>Add Players</h2>
-            <div className="input-group">
-                <input
-                    type="text"
-                    placeholder="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+            <h1>Add Players</h1>
+            <div className="form-group">
+                <label htmlFor="userName">Username:</label>
+                <input 
+                    type="text" 
+                    id="userName" 
+                    placeholder="Enter your Username" 
+                    value={username} 
+                    onChange={(e) => setUsername(e.target.value)} 
+                    required 
                 />
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                <label htmlFor="password">Password:</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    placeholder="Enter your Password" 
+                    value={password} 
+                    onChange={(e) => setPassword(e.target.value)} 
+                    required 
                 />
-                <button onClick={addPlayer}>Add</button>
+                <div className="wrap">
+                    <button type="submit" class="addButton" onClick={addPlayer}>Add</button>
+                </div>
             </div>
             <div className="players-list">
                 {activePlayers.map((player, index) => (
-                    <div key={index} className="player-box">
+                    <div class="player" key={index} className="player-box">
                         <p>{player.username}</p>
                     </div>
                 ))}
             </div>
-            <button onClick={startGame}>Start to Play</button>
+            <button class = "startButton" onClick={startGame}>Start to Play</button>
         </div>
     );
 }

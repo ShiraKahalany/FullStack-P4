@@ -1,4 +1,5 @@
 import React from 'react';
+import './css/Toolbar.css'
 
 const Toolbar = ({ onAction }) => {
   return (
@@ -10,4 +11,4 @@ const Toolbar = ({ onAction }) => {
   );
 };
 
-export default Toolbar;
+export default Toolbar; 

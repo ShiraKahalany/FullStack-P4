@@ -1,0 +1,26 @@
+.board {
+    text-align: center;
+    padding: 20px;
+    background-color: #f0f7ff; /* Lighter blue background */
+    border-radius: 10px;
+  }
+  
+  .board p {
+    color: #333; /* Dark grey for contrast */
+    margin: 10px 0;
+  }
+  
+  .board button {
+    background-color: #7a6f9b; /* Soft purple */
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .board button:hover {
+    background-color: #60508c; /* Slightly darker purple */
+  }
+  

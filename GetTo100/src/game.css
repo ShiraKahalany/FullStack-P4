@@ -1,0 +1,35 @@
+
+.game-container {
+    text-align: center;
+    padding: 20px;
+    background-color: #e8f0fe; /* Light blue background */
+  }
+  
+  .instruction-title, .instructions {
+    color: #7a6f9b; /* Soft purple */
+    font-size: 1.2em;
+    font-family: 'Bangers', cursive;
+
+  }
+  .instruction-title{
+    font-weight: bold;
+    font-size: 1.5em;
+  }
+  .board-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .board-frame {
+    border: 2px solid #7a6f9b; /* Soft purple border */
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #cfe2f3; /* Very light blue */
+  }
+  
+  .active-board {
+    border-color: #4b2e83; /* Darker purple for active board */
+  }
+  

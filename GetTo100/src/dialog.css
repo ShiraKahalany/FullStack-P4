@@ -1,0 +1,28 @@
+.dialog-container {
+    text-align: center;
+    padding: 20px;
+    background-color: #e8f0fe; /* Light blue background */
+  }
+  
+  .dialog-title {
+    color: #4b2e83; /* Darker purple */
+  }
+  
+  .dialog-content {
+    color: #333; /* Dark grey for contrast */
+  }
+  
+  .dialog-actions button {
+    background-color: #7a6f9b; /* Soft purple */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .dialog-actions button:hover {
+    background-color: #60508c; /* Slightly darker purple */
+  }
+  

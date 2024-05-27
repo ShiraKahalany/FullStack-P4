@@ -1,18 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
+import './css/TextEditor.css';
 
-const TextEditor = () => {
-  const [text, setText] = useState('');
-
-  const handleChange = (event) => {
-    setText(event.target.value);
-  };
-
+const TextEditor = ({ text, textSize }) => {
   return (
-    <textarea
-      value={text}
-      onChange={handleChange}
+    <div
       className="text-editor"
-      placeholder="Start typing here..."
+      style={{ fontSize: `${textSize}px` }}
+      dangerouslySetInnerHTML={{ __html: text }}
     />
   );
 };

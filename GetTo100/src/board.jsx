@@ -1,4 +1,5 @@
 import React from 'react';
+import './board.css';
 
 function Board({ number, steps, isActive, onMove, onGameEnd, score }) {
   const handleOperation = (operation) => {

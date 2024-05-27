@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Board from './board';
 import AlertDialog from './dialog';
+import './game.css' ;
 
 function Game() {
   const location = useLocation();
@@ -96,11 +97,12 @@ function Game() {
   };
 
   return (
-    <>
+    <div class="game-body">
+    
       <h1>Get to 100</h1>
-      <h2>Instructions</h2>
-      <p>Click on a number to add it to the current total.</p>
-      <p>Keep clicking numbers until you reach 100.</p>
+      <h2 class="instruction-title">Instructions</h2>
+      <p class="instructions">Click on a number to add it to the current total. <br></br> Keep clicking numbers until you reach 100.</p>
+      
       <div>
         {boards.map((board, index) => (
           <div
@@ -120,7 +122,7 @@ function Game() {
         ))}
         <AlertDialog open={openDialog} onClose={handleDialogClose} dialogData={dialogData} />
       </div>
-    </>
+    </div>
   );
 }
 

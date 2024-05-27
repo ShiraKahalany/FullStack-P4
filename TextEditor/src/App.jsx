@@ -5,9 +5,12 @@ import KeyboardLayout from './KeyboardLayout';
 import ColorPalette from './colorPalette';
 import TextEditor from './TextEditor';
 import FontFamilySelector from './FontFamilySelector';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUndo } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
   const [text, setText] = useState('');
+  const [textHistory, setTextHistory] = useState([]);
   const [isEnglishKeyboard, setIsEnglishKeyboard] = useState(true);
   const [isUppercase, setIsUppercase] = useState(true);
   const [selectedColor, setSelectedColor] = useState(null);
@@ -15,7 +18,12 @@ function App() {
   const [charSize, setCharSize] = useState(null);
   const [fontFamily, setFontFamily] = useState(null);
 
+  const saveHistory = (newText) => {
+    setTextHistory((prevHistory) => [newText, ...prevHistory].slice(0, 10));
+  };
+
   const deletekey = () => {
+    saveHistory(text);
     let updatedText = text;
     if (updatedText.charAt(updatedText.length - 1) === '>') {
       const startIndex = updatedText.lastIndexOf('<');
@@ -27,6 +35,7 @@ function App() {
   };
 
   const handleKeyPress = (char) => {
+    saveHistory(text);
     let newChar = char;
     let style = '';
 
@@ -73,6 +82,7 @@ function App() {
   };
 
   const applyFontFamilyToAll = (font) => {
+    saveHistory(text);
     const updatedText = text.replace(/<span(.*?)>(.*?)<\/span>/g, (match, p1, p2) => {
       let newStyles = `font-family: ${font};`;
       let updatedSpan = p1;
@@ -92,6 +102,13 @@ function App() {
     setText(updatedText);
   };
 
+  const handleUndo = () => {
+    if (textHistory.length > 0) {
+      const previousText = textHistory[0];
+      setText(previousText);
+      setTextHistory((prevHistory) => prevHistory.slice(1));
+    }
+  };
 
   return (
     <>
@@ -99,6 +116,7 @@ function App() {
       <div className="container">
         <div className="keyboards">
           <ColorPalette onColorChange={handleColorChange} />
+          <button onClick={handleUndo}><FontAwesomeIcon icon={faUndo} /></button>
           <FontFamilySelector onFontFamilyChange={handleFontFamilyChange} />
           {isEnglishKeyboard ? (
             <KeyboardLayout letters={isUppercase ? englishCapitalLetters : englishSmallLetters} onKeyPress={handleKeyPress} />
@@ -107,7 +125,7 @@ function App() {
           )}
           <div className="buttons">
             <button onClick={deletekey}>Delete</button>
-            <button onClick={() => { setText((prevText) => prevText + ' ') }}>Space</button>
+            <button onClick={() => { saveHistory(text); setText((prevText) => prevText + ' ') }}>Space</button>
             <button onClick={handleToggleKeyboard}>
               {isEnglishKeyboard ? 'Hebrew' : 'English'}
             </button>
@@ -120,9 +138,9 @@ function App() {
             <button onClick={decreaseCharSize}>a</button>
           </div>
           <div className="generalbuttons">
-            <button onClick={() => { setText('') }}>Clear All</button>
-            <button onClick={() => { setText(text.toUpperCase()) }}>Upper All</button>
-            <button onClick={() => { setText(text.toLowerCase()) }}>Lower All</button>
+            <button onClick={() => { saveHistory(text); setText('') }}>Clear All</button>
+            <button onClick={() => { saveHistory(text); setText(text.toUpperCase()) }}>Upper All</button>
+            <button onClick={() => { saveHistory(text); setText(text.toLowerCase()) }}>Lower All</button>
             <button onClick={increaseTextSize}>AA</button>
             <button onClick={decreaseTextSize}>aa</button>
             <FontFamilySelector onFontFamilyChange={applyFontFamilyToAll} />

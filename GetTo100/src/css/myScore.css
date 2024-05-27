@@ -30,11 +30,11 @@ input:hover {
 
 .btn-score {
     font-family: 'Bangers', cursive;
-    font-size: 2em;
+    font-size: 1em;
     font-weight: bold; 
     border: 2px solid #ccc;
     background-color: aliceblue;
-    color: blue;
+    color: black;
 }
 
 .btn-score:focus {

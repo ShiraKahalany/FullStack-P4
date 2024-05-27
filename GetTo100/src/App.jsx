@@ -24,7 +24,6 @@ function App() {
           <Route path="/game" element={<Game />} />
           <Route path="/myScore" element={<MyScore />} />
         </Routes>
-        {/* { <NavigationButton /> } */}
       </Router>
     </>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import './board.css';
+import './css/board.css';
 
 function Board({ number, steps, isActive, onMove, onGameEnd, score }) {
   const handleOperation = (operation) => {
@@ -24,7 +24,7 @@ function Board({ number, steps, isActive, onMove, onGameEnd, score }) {
     const newSteps = steps + 1;
     onMove(newNumber, newSteps);
 
-    if (newNumber >= 100) {
+    if (newNumber === 100) {
       onGameEnd(newSteps);
     }
   };

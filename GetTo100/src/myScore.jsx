@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './myScore.css';
+import './css/myScore.css';
 
 function MyScore() {
     const [username, setUsername] = useState('');

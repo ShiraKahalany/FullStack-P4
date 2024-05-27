@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Board from './board';
 import AlertDialog from './dialog';
-import './game.css' ;
+import './css/game.css' ;
 
 function Game() {
   const location = useLocation();
@@ -107,7 +107,7 @@ function Game() {
         {boards.map((board, index) => (
           <div
             key={index}
-            style={{ border: index === currentPlayerIndex ? '2px solid green' : '2px solid grey', margin: '10px', padding: '10px' }}
+            style={{ border: index === currentPlayerIndex ? '2px solid green' : '2px solid grey', margin: '10px', padding: '10px' , backgroundColor: 'white'}}
           >
             <h3>{board.player.username}'s Board</h3>
             <Board

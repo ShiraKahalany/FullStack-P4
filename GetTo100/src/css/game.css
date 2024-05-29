@@ -5,13 +5,13 @@
     background-color: #e8f0fe; /* Light blue background */
   }
   
-  .instruction-title, .instructions {
+  div .instruction-title, .instructions {
     color: #7a6f9b; /* Soft purple */
     font-size: 1.2em;
     font-family: 'Bangers', cursive;
 
   }
-  .instruction-title{
+  h2 .instruction-title{
     font-weight: bold;
     font-size: 1.5em;
   }

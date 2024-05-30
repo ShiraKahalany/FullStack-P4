@@ -18,7 +18,7 @@ function Home() {
 
   
     return (
-        <div class="homebody">
+        <div className="homebody">
         <div className="header-container">
         <button className="profile-button" onClick={() => navigate('/myScore')}>My Score</button>
         <h1 className="title">Top 3 Players</h1>

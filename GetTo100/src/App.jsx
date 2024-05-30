@@ -16,7 +16,7 @@ function App() {
 
   return (
     <>
-      {/* <StoreDataInLocalStorage/> */}
+      <StoreDataInLocalStorage/>
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />

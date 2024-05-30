@@ -10,7 +10,7 @@ import { faUndo } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
   const [text, setText] = useState('');
-  const [textHistory, setTextHistory] = useState([]);
+  const [history, setHistory] = useState([]);
   const [isEnglishKeyboard, setIsEnglishKeyboard] = useState(true);
   const [isUppercase, setIsUppercase] = useState(true);
   const [selectedColor, setSelectedColor] = useState(null);
@@ -18,12 +18,21 @@ function App() {
   const [charSize, setCharSize] = useState(null);
   const [fontFamily, setFontFamily] = useState(null);
 
-  const saveHistory = (newText) => {
-    setTextHistory((prevHistory) => [newText, ...prevHistory].slice(0, 10));
+  const saveHistory = () => {
+    setHistory((prevHistory) => [
+      {
+        text,
+        selectedColor,
+        textSize,
+        charSize,
+        fontFamily,
+      },
+      ...prevHistory
+    ].slice(0, 10));
   };
 
-  const deletekey = () => {
-    saveHistory(text);
+  const deleteKey = () => {
+    saveHistory();
     let updatedText = text;
     if (updatedText.charAt(updatedText.length - 1) === '>') {
       const startIndex = updatedText.lastIndexOf('<');
@@ -35,7 +44,7 @@ function App() {
   };
 
   const handleKeyPress = (char) => {
-    saveHistory(text);
+    saveHistory();
     let newChar = char;
     let style = '';
 
@@ -82,14 +91,13 @@ function App() {
   };
 
   const applyFontFamilyToAll = (font) => {
-    saveHistory(text);
+    saveHistory();
     const updatedText = text.replace(/<span(.*?)>(.*?)<\/span>/g, (match, p1, p2) => {
       let newStyles = `font-family: ${font};`;
       let updatedSpan = p1;
 
       if (p1.includes('style="')) {
         updatedSpan = p1.replace(/style="(.*?)"/, (styleMatch, styleContent) => {
-          // Remove any existing font-family definition
           const cleanedStyles = styleContent.replace(/font-family:[^;]+;/, '').trim();
           return `style="${cleanedStyles} ${newStyles}"`.trim();
         });
@@ -103,10 +111,14 @@ function App() {
   };
 
   const handleUndo = () => {
-    if (textHistory.length > 0) {
-      const previousText = textHistory[0];
-      setText(previousText);
-      setTextHistory((prevHistory) => prevHistory.slice(1));
+    if (history.length > 0) {
+      const previousState = history[0];
+      setText(previousState.text);
+      setSelectedColor(previousState.selectedColor);
+      setTextSize(previousState.textSize);
+      setCharSize(previousState.charSize);
+      setFontFamily(previousState.fontFamily);
+      setHistory((prevHistory) => prevHistory.slice(1));
     }
   };
 
@@ -124,8 +136,8 @@ function App() {
             <KeyboardLayout letters={hebrewLetters} onKeyPress={handleKeyPress} />
           )}
           <div className="buttons">
-            <button onClick={deletekey}>Delete</button>
-            <button onClick={() => { saveHistory(text); setText((prevText) => prevText + ' ') }}>Space</button>
+            <button onClick={deleteKey}>Delete</button>
+            <button onClick={() => { saveHistory(); setText((prevText) => prevText + ' ') }}>Space</button>
             <button onClick={handleToggleKeyboard}>
               {isEnglishKeyboard ? 'Hebrew' : 'English'}
             </button>
@@ -138,9 +150,9 @@ function App() {
             <button onClick={decreaseCharSize}>a</button>
           </div>
           <div className="generalbuttons">
-            <button onClick={() => { saveHistory(text); setText('') }}>Clear All</button>
-            <button onClick={() => { saveHistory(text); setText(text.toUpperCase()) }}>Upper All</button>
-            <button onClick={() => { saveHistory(text); setText(text.toLowerCase()) }}>Lower All</button>
+            <button onClick={() => { saveHistory(); setText('') }}>Clear All</button>
+            <button onClick={() => { saveHistory(); setText(text.toUpperCase()) }}>Upper All</button>
+            <button onClick={() => { saveHistory(); setText(text.toLowerCase()) }}>Lower All</button>
             <button onClick={increaseTextSize}>AA</button>
             <button onClick={decreaseTextSize}>aa</button>
             <FontFamilySelector onFontFamilyChange={applyFontFamilyToAll} />

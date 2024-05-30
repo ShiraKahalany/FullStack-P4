@@ -6,13 +6,15 @@ import { useNavigate } from 'react-router-dom';
 function Home() {
     const [topPlayers, setTopPlayers] = useState([]);
     const navigate = useNavigate()
-    useEffect(() => {
-        const playersData = JSON.parse(localStorage.getItem('playersData'));
-        const sortedPlayers = playersData.players.sort((a, b) => b.average - a.average);
-        setTopPlayers(sortedPlayers.slice(0, 3));
 
-    }
-, []);
+    useEffect(() => {
+      const playersData = JSON.parse(localStorage.getItem('playersData'));
+      const filteredPlayers = playersData.players.filter(player => player.average !== 0);
+      const sortedPlayers = filteredPlayers.sort((a, b) => a.average - b.average);
+      const topThreePlayers = sortedPlayers.slice(0, 3);
+
+      setTopPlayers(topThreePlayers);
+  }, []);
 
   
     return (

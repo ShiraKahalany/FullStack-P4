@@ -3,17 +3,18 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Board from './board';
 
 function Game() {
+  // Get the active players from the location state
   const location = useLocation();
   const navigate = useNavigate();
   const activePlayers = location.state?.activePlayers || [];
+
+  // Initialize the current player index and boards
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
   const [boards, setBoards] = useState([]);
 
   useEffect(() => {
-    const playersData = JSON.parse(localStorage.getItem('playersData')) || { players: [] };
     const initialBoards = activePlayers.map(player => {
-      const playerData = playersData.players.find(p => p.username === player.username && p.password === player.password);
-      const average = playerData ? playerData.average : 0;
+      const average = player.average || 0;
       return {
         player,
         number: Math.floor(Math.random() * 100),
@@ -24,14 +25,14 @@ function Game() {
     setBoards(initialBoards);
   }, [activePlayers]);
 
+
   const handleMove = (index, newNumber, newSteps) => {
     const updatedBoards = boards.map((board, i) =>
-      i === index ? { ...board, number: newNumber, steps: newSteps } : board
-    );
-
+      i === index ? { ...board, number: newNumber, steps: newSteps } : board );
     setBoards(updatedBoards);
     setCurrentPlayerIndex((prevIndex) => (prevIndex + 1) % updatedBoards.length);
   };
+
 
   const handleGameEnd = (index, steps) => {
     const player = boards[index].player;
@@ -50,14 +51,16 @@ function Game() {
       }
       return p;
     });
-
     localStorage.setItem('playersData', JSON.stringify({ players: updatedPlayers }));
 
     const updatedBoards = boards.map((board, i) => {
       if (i === index) {
         const playerData = updatedPlayers.find(p => p.username === player.username && p.password === player.password);
         const average = playerData ? playerData.average : 0;
-        return { ...board, number: Math.floor(Math.random() * 100), steps: 0, score: average };
+        return { ...board, 
+                 number: Math.floor(Math.random() * 100), 
+                 steps: 0, 
+                 score: average };
       }
       return board;
     });
@@ -65,9 +68,7 @@ function Game() {
     setBoards(updatedBoards);
 
     const action = window.confirm(`${player.username} reached 100 in ${steps} steps! Start a new game? Click OK to start a new game or Cancel to exit.`);
-    if (action) {
-      setBoards(updatedBoards);
-    } else {
+    if (!action) {
       const remainingBoards = updatedBoards.filter((_, i) => i !== index);
       setBoards(remainingBoards);
 
@@ -83,6 +84,7 @@ function Game() {
         setCurrentPlayerIndex((prevIndex) => (prevIndex % remainingBoards.length));
       }
     }
+
   };
 
   return (
@@ -97,7 +99,7 @@ function Game() {
         {boards.map((board, index) => (
           <div
             key={index}
-            style={{ border: index === currentPlayerIndex ? '2px solid green' : '2px solid grey', margin: '10px', padding: '10px', backgroundColor: 'white' }}
+            style={{ border: index === currentPlayerIndex ? '2px solid green' : '2px solid white', margin: '10px', padding: '10px', backgroundColor: 'white' }}
           >
             <h3>{board.player.username}'s Board</h3>
             <Board

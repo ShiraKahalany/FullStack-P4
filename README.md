@@ -66,8 +66,11 @@ Goal:
 
 ## 
 <img width="1880" height="864" alt="image" src="https://github.com/user-attachments/assets/ed9f6ded-67fc-4e6a-9ad0-30ed6c25b8c5" />
+
 <img width="1899" height="860" alt="image" src="https://github.com/user-attachments/assets/eeaff68b-13b7-4da4-b538-5299adece022" />
+
 <img width="1883" height="861" alt="image" src="https://github.com/user-attachments/assets/457e36d3-fa80-4280-ba95-c46c4eb004a4" />
+
 <img width="1871" height="865" alt="image" src="https://github.com/user-attachments/assets/a2d9fcc8-bbbb-4a31-b1c9-3846bc8214c5" />
 
 

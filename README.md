@@ -64,7 +64,7 @@ Goal:
    - `npm install`
    - `npm run dev`
 
-## 
+## 📸 Screenshots
 <img width="1880" height="864" alt="image" src="https://github.com/user-attachments/assets/ed9f6ded-67fc-4e6a-9ad0-30ed6c25b8c5" />
 
 <img width="1899" height="860" alt="image" src="https://github.com/user-attachments/assets/eeaff68b-13b7-4da4-b538-5299adece022" />
